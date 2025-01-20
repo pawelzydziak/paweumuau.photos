@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
-import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
+import {FaLinkedin, FaFacebook, FaInstagram, FaYoutube} from "react-icons/fa";
 
 export default function Home() {
-    return (<div className="flex">
-            <div className="min-h-screen w-1/2 bg-[#222222] flex justify-center items-center">
+    return (<div className="flex flex-col md:flex-row h-screen">
+            <div className="flex flex-col w-full md:w-1/2 bg-[#222222] justify-center items-center p-10 space-y-8">
                 <div className="flex flex-col max-w-xs">
                     <div className="text-white py-3  text-5xl  font-bold font-sans  text-nowrap">Paweł Żydziak</div>
                     <text
@@ -59,10 +59,13 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-            <div className="w-1/2 max-h-screen">
-                <img className="object-cover w-full h-full" src="/photos/mainpage-cover.jpg" alt="cover"/>
+            <div className="w-full md:w-1/2 max-h-screen">
+                <img
+                    className="object-cover w-full h-full"
+                    src="/photos/meta/mainpage-cover.jpg"
+                    alt="cover"
+                />
             </div>
-
         </div>
     );
 }
