@@ -1,36 +1,19 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+### Paweumuau Photos site migration from Adobe Portfolio
 
-## Getting Started
+Since the Adobe is rising the price for the Portfolio service, I decided to migrate my photos site to the custom one. 
+Adobe doens't allow for any kind of export, so I had to do it manually from scratch.
 
-First, run the development server:
+I decided to use the next.js. This is the first time I'm writing frontend, so I'm learning as I go.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Original portfolio site screenshots, for future reference (when Adobe kills it):
+![img.png](img.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![img_1.png](img_1.png)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![img_2.png](img_2.png)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![img_3.png](img_3.png)
 
-## Learn More
+![img_4.png](img_4.png)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![img_5.png](img_5.png)
