@@ -4,7 +4,6 @@ import { FaLinkedin, FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 
 export default function Home() {
     return (<div className="flex">
-
             <div className="min-h-screen w-1/2 bg-[#222222] flex justify-center items-center">
                 <div className="flex flex-col max-w-xs">
                     <div className="text-white py-3  text-5xl  font-bold font-sans  text-nowrap">Paweł Żydziak</div>
