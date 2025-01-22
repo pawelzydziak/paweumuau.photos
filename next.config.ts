@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
+//todo
 const nextConfig: NextConfig = {
-  /* config options here */
+  images: {
+
+
+  },
 };
 
 export default nextConfig;
+
+module.exports = nextConfig;
