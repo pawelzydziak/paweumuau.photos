@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
-import { notFound } from 'next/navigation';
 import AlbumGallery from './AlbumGallery';
+import {notFound} from "next/navigation";
 
 interface Photo {
     src: string;
