@@ -23,12 +23,6 @@ export default function Home() {
                     >
                         Muzyka
                     </Link>
-                    <Link
-                        href="/kontakt"
-                        className="bg-stone-50 py-3 px-10 rounded-3xl shadow-md text-2xl font-semibold font-mono mb-12 text-center"
-                    >
-                        Kontakt
-                    </Link>
 
                     <div className="w-full flex py-5 bg-[#222222] text-white">
                         {/* Social Links */}
