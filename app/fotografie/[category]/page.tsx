@@ -22,7 +22,7 @@ export default async function CategoryPage({ params }: { params: { category: str
                             height={200}
                             className="object-cover w-full h-48 group-hover:blur-sm transition"
                         />
-                        {album.cover}
+                        {/*{album.cover}*/}
                         <span className="absolute inset-0 flex justify-center items-center text-xl font-semibold bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition">
                             {album.name}
                         </span>

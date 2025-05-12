@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from "next/link";
 
 const categories = [
@@ -9,12 +10,13 @@ const categories = [
 export default function Fotografie() {
     return (
         <div className="flex flex-col md:flex-row h-screen">
-
             <div className="w-full md:w-1/2 max-h-screen">
-                <img
-                    className="object-cover w-full h-full"
+                <Image
                     src="/photos/meta/fotografie-cover.jpg"
                     alt="cover"
+                    width={768}
+                    height={1024}
+                    className="object-cover w-full h-full"
                 />
             </div>
             <div className="flex flex-col w-full md:w-1/2 bg-[#222222] justify-center items-center p-10 space-y-8">
@@ -39,5 +41,4 @@ export default function Fotografie() {
             </div>
         </div>
     );
-
 }
