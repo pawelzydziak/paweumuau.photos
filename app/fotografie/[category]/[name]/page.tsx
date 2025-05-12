@@ -23,7 +23,7 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
 
     const photos = fs
         .readdirSync(photoPath)
-        .filter((file) => /\.(jpg|jpeg|png|gif)$/.test(file))
+        .filter((file) => /\.(jpg|jpeg|png|gif|webp)$/.test(file))
         .map((file) => ({
             src: `/photos/${category}/${name}/${file}`,
             alt: file,
