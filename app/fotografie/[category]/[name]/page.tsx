@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 interface Photo {
     src: string;
     alt: string;
+    full: string;
 }
 
 interface PageProps {
@@ -16,20 +17,20 @@ interface PageProps {
 }
 
 async function getPhotos(category: string, name: string): Promise<Photo[]> {
-    const photoPath = path.join(process.cwd(), 'public', 'photos', category, name);
-    if (!fs.existsSync(photoPath)) {
+    const thumbsPath = path.join(process.cwd(), 'public', 'photos', category, name, 'thumbs');
+    if (!fs.existsSync(thumbsPath)) {
         notFound();
     }
 
-    const photos = fs
-        .readdirSync(photoPath)
-        .filter((file) => /\.(jpg|jpeg|png|gif|webp)$/.test(file))
-        .map((file) => ({
-            src: `/photos/${category}/${name}/${file}`,
-            alt: file,
-        }));
+    const files = fs
+        .readdirSync(thumbsPath)
+        .filter((file) => /\.(jpg|jpeg|png|gif|webp)$/.test(file));
 
-    return photos;
+    return files.map((file) => ({
+        src: `/photos/${category}/${name}/thumbs/${file}`,
+        alt: file,
+        full: `/photos/${category}/${name}/${file}`
+    }));
 }
 
 export default async function Album({ params }: PageProps) {

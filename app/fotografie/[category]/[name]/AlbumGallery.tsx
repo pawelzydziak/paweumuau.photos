@@ -7,6 +7,7 @@ import styled from 'styled-components';
 interface Photo {
     src: string;
     alt: string;
+    full: string;
 }
 
 const GalleryContainer = styled.div`
@@ -127,7 +128,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
                 <Overlay onClick={closePhoto}>
                     <Button onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
                     <Button onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
-                    <FadeInImage src={photos[activePhotoIndex].src} alt={photos[activePhotoIndex].alt} fill />
+                    <FadeInImage src={photos[activePhotoIndex].full} alt={photos[activePhotoIndex].alt} fill />
                 </Overlay>
             )}
         </GalleryContainer>
