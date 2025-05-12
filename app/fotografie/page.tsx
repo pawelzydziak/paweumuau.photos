@@ -19,10 +19,10 @@ export default function Fotografie() {
             </div>
             <div className="flex flex-col w-full md:w-1/2 bg-[#222222] justify-center items-center p-10 space-y-8">
                 <div className="text-white   text-5xl  font-bold font-sans text-center text-nowrap">Portfolio</div>
-                <text
+                <p
                     className="text-white text-opacity-70 py-3  mb-10 font-light font-sans text-center">Poniżej znajdują
                     się przyciski odsyłające do stron z albumami.
-                </text>
+                </p>
 
                 {/*items-center for having the buttons different sizes - more like on adobe portfolio*/}
                 <div className="flex flex-col items-stretch space-y-6">

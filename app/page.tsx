@@ -7,10 +7,10 @@ export default function Home() {
             <div className="flex flex-col w-full md:w-1/2 bg-[#222222] justify-center items-center p-10 space-y-8">
                 <div className="flex flex-col max-w-xs">
                     <div className="text-white py-3  text-5xl  font-bold font-sans  text-nowrap">Paweł Żydziak</div>
-                    <text
+                    <p
                         className="text-white text-opacity-70 py-3  mb-10 font-light font-sans text-center">Inspirujący
                         cytat.
-                    </text>
+                    </p>
                     <Link
                         href="/fotografie"
                         className="bg-stone-50 py-3 px-10 rounded-3xl shadow-md text-2xl font-semibold font-mono text-center mb-8"
