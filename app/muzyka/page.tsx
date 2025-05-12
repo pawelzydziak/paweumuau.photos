@@ -1,11 +1,15 @@
+import Image from 'next/image';
+
 export default function Muzyka() {
     return (
         <div className="flex flex-col md:flex-row h-screen">
             <div className="w-full md:w-1/2 max-h-screen">
-                <img
-                    className="object-cover w-full h-full"
+                <Image
                     src="/photos/meta/muzyka-cover.jpg"
                     alt="cover"
+                    className="object-cover w-full h-full"
+                    width={500}
+                    height={500}
                 />
             </div>
 

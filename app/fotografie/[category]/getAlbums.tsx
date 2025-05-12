@@ -3,6 +3,7 @@ import path from 'path';
 
 interface Album {
     name: string;
+    displayName: string;
     cover: string;
 }
 
@@ -33,11 +34,11 @@ const albumNameMap: { [key: string]: string } = {
     wilno: 'Wilno',
     auschwitz: 'Auschwitz',
     'babia-gora': 'Babia Góra',
-    chorzów: 'Chorzów',
+    chorzow: 'Chorzów',
     gliwice: 'Gliwice',
     gory: 'Góry',
     'jesien-wpkiw-2019': 'Jesień WPKiW 2019',
-    kato: 'Katowice',
+    katowice: 'Katowice',
     krakow: 'Kraków',
     krzyzne: 'Krzyżne',
     lodz: 'Łódź',
@@ -75,7 +76,8 @@ export async function getAlbums(category: string): Promise<Album[]> {
         .readdirSync(categoryPath, {withFileTypes: true})
         .filter((dirent) => dirent.isDirectory())
         .map((dirent) => ({
-            name: formatAlbumName(dirent.name),
-            cover: `/photos/${category}/${dirent.name}/meta/cover.jpg`,
+            name: dirent.name,
+            displayName: formatAlbumName(dirent.name),
+            cover: `/photos/${category}/${dirent.name}/meta/cover.jpg`
         }));
 }

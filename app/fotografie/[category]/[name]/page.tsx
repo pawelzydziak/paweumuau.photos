@@ -1,11 +1,18 @@
 import fs from 'fs';
 import path from 'path';
 import AlbumGallery from './AlbumGallery';
-import {notFound} from "next/navigation";
+import { notFound } from 'next/navigation';
 
 interface Photo {
     src: string;
     alt: string;
+}
+
+interface PageProps {
+    params: {
+        category: string;
+        name: string;
+    };
 }
 
 async function getPhotos(category: string, name: string): Promise<Photo[]> {
@@ -25,7 +32,7 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
     return photos;
 }
 
-export default async function Album({ params }: { params: { category: string; name: string } }) {
+export default async function Album({ params }: PageProps) {
     const photos = await getPhotos(params.category, params.name);
     return <AlbumGallery photos={photos} albumName={params.name} />;
 }

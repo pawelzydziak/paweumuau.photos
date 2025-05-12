@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from 'next/image';
 import {FaLinkedin, FaFacebook, FaInstagram, FaYoutube} from "react-icons/fa";
 
 export default function Home() {
@@ -54,10 +55,13 @@ export default function Home() {
                 </div>
             </div>
             <div className="w-full md:w-1/2 max-h-screen">
-                <img
+                <Image
                     className="object-cover w-full h-full"
                     src="/photos/meta/mainpage-cover.jpg"
                     alt="cover"
+                    width={1000}
+                    height={1000}
+                    priority
                 />
             </div>
         </div>
