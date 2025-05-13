@@ -23,7 +23,7 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
     try {
         await fs.access(albumDirectory);
         await fs.access(thumbsPath);
-    } catch (error) {
+    } catch{
         notFound();
     }
 
