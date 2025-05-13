@@ -10,7 +10,6 @@ export default function Muzyka() {
                     className="object-cover w-full h-full"
                     width={500}
                     height={500}
-                    placeholder="blur"
                 />
             </div>
 

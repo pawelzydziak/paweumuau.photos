@@ -30,7 +30,6 @@ export default async function CategoryPage({ params }: PageProps) {
                             width={500}
                             height={300}
                             className="object-cover w-full rounded-md aspect-video"
-                            placeholder="blur"
                         />
                         <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-80 transition-all duration-500 rounded-md">
                             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-500">
