@@ -1,4 +1,4 @@
-import fs from 'fs';
+import fs from 'fs/promises';
 import path from 'path';
 import AlbumGallery from './AlbumGallery';
 import { notFound } from 'next/navigation';
@@ -17,23 +17,31 @@ interface PageProps {
 }
 
 async function getPhotos(category: string, name: string): Promise<Photo[]> {
-    const thumbsPath = path.join(process.cwd(), 'public', 'photos', category, name, 'thumbs');
-    if (!fs.existsSync(thumbsPath)) {
+    const albumDirectory = path.join(process.cwd(), 'public', 'photos', category, name);
+    const thumbsPath = path.join(process.cwd(), 'public', 'thumbs', category, name);
+
+    try {
+        await fs.access(albumDirectory);
+        await fs.access(thumbsPath);
+    } catch (error) {
         notFound();
     }
 
-    const files = fs
-        .readdirSync(thumbsPath)
-        .filter((file) => /\.(jpg|jpeg|png|gif|webp)$/.test(file));
+    const files = (await fs.readdir(thumbsPath))
+        .filter((file) => /\.(jpe?g|png|gif|webp)$/i.test(file));
 
-    return files.map((file) => ({
-        src: `/photos/${category}/${name}/thumbs/${file}`,
+    const photos: Photo[] = files.map((file) => ({
+        src: `/thumbs/${category}/${name}/${file}`,
         alt: file,
         full: `/photos/${category}/${name}/${file}`
     }));
+
+    return photos;
 }
 
 export default async function Album({ params }: PageProps) {
-    const photos = await getPhotos(params.category, params.name);
-    return <AlbumGallery photos={photos} albumName={params.name} />;
+    const { category, name } = params;
+    const photos = await getPhotos(category, name);
+
+    return <AlbumGallery photos={photos} albumName={name} />;
 }
