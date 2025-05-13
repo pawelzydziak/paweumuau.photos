@@ -78,6 +78,6 @@ export async function getAlbums(category: string): Promise<Album[]> {
         .map((dirent) => ({
             name: dirent.name,
             displayName: formatAlbumName(dirent.name),
-            cover: `/photos/${category}/${dirent.name}/meta/cover.jpg`
+            cover: `/photos/${category}/${dirent.name}/meta/cover.webp`
         }));
 }

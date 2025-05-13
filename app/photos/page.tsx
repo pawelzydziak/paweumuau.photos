@@ -12,7 +12,7 @@ export default function PhotosPage() {
         <div className="flex flex-col md:flex-row h-screen">
             <div className="w-full md:w-1/2 max-h-screen">
                 <Image
-                    src="/photos/meta/fotografie-cover.jpg"
+                    src="/photos/meta/fotografie-cover.webp"
                     alt="cover"
                     width={768}
                     height={1024}

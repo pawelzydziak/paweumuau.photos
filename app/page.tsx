@@ -57,7 +57,7 @@ export default function Home() {
             <div className="w-full md:w-1/2 max-h-screen">
                 <Image
                     className="object-cover w-full h-full"
-                    src="/photos/meta/mainpage-cover.jpg"
+                    src="/photos/meta/mainpage-cover.webp"
                     alt="cover"
                     width={1000}
                     height={1000}
