@@ -17,6 +17,7 @@ export default function Fotografie() {
                     width={768}
                     height={1024}
                     className="object-cover w-full h-full"
+                    placeholder="blur"
                 />
             </div>
             <div className="flex flex-col w-full md:w-1/2 bg-[#222222] justify-center items-center p-10 space-y-8">

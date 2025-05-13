@@ -119,7 +119,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
             <Grid>
                 {photos.map((photo, index) => (
                     <PhotoContainer key={photo.src} onClick={() => setActivePhotoIndex(index)}>
-                        <Image src={photo.src} alt={photo.alt} fill className="object-cover rounded-lg" />
+                        <Image src={photo.src} alt={photo.alt} fill className="object-cover rounded-lg" placeholder="blur"/>
                     </PhotoContainer>
                 ))}
             </Grid>
