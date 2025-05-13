@@ -13,13 +13,13 @@ export default function Home() {
                         cytat.
                     </p>
                     <Link
-                        href="/fotografie"
+                        href="/photos"
                         className="bg-stone-50 py-3 px-10 rounded-3xl shadow-md text-2xl font-semibold font-mono text-center mb-8"
                     >
                         Fotografie
                     </Link>
                     <Link
-                        href="/muzyka"
+                        href="/music"
                         className="bg-stone-50 py-3 px-10 rounded-3xl shadow-md text-2xl font-semibold font-mono mb-8 text-center"
                     >
                         Muzyka

@@ -7,7 +7,7 @@ const categories = [
     { name: 'inne', label: 'INNE' },
 ];
 
-export default function Fotografie() {
+export default function PhotosPage() {
     return (
         <div className="flex flex-col md:flex-row h-screen">
             <div className="w-full md:w-1/2 max-h-screen">
@@ -31,7 +31,7 @@ export default function Fotografie() {
                     {categories.map((category) => (
                         <Link
                             key={category.name}
-                            href={`/fotografie/${category.name}`}
+                            href={`/photos/${category.name}`}
                             className="bg-stone-50 py-3 px-10 rounded-3xl shadow-md font-semibold text-center"
                         >
                             {category.label}

@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-export default function Muzyka() {
+export default function Music() {
     return (
         <div className="flex flex-col md:flex-row h-screen">
             <div className="w-full md:w-1/2 max-h-screen">
