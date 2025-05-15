@@ -71,7 +71,7 @@ function formatAlbumName(name: string): string {
 }
 
 export async function getAlbums(category: string): Promise<Album[]> {
-    const categoryPath = path.join(process.cwd(), 'public', 'photos', category);
+    const categoryPath = path.join(process.cwd(), 'public', 'optimized', category);
     return fs
         .readdirSync(categoryPath, {withFileTypes: true})
         .filter((dirent) => dirent.isDirectory())

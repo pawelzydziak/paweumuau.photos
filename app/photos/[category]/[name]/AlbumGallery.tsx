@@ -129,7 +129,7 @@ const FadeInImage = styled(Image)`
 export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; albumName: string }) {
     const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
     const [isImageLoading, setIsImageLoading] = useState(false);
-
+    const [loadedPhotos, setLoadedPhotos] = useState<Photo[]>([]); // Added state to manage loaded photos
 
     const showPrevPhoto = () => {
         if (activePhotoIndex === null) return;
@@ -155,41 +155,50 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
         }
     }, [activePhotoIndex]);
 
+    useEffect(() => {
+        const loadPhotos = async () => {
+            for (const photo of photos) {
+                setLoadedPhotos((prev) => {
+                    if (!prev.some((p) => p.src === photo.src)) {
+                        return [...prev, photo];
+                    }
+                    return prev;
+                });
+                await new Promise((resolve) => setTimeout(resolve, 50)); // Simulate delay for loading
+            }
+        };
+        loadPhotos();
+    }, [photos]);
+
     return (
         <GalleryContainer onKeyDown={handleKeyDown} tabIndex={0}>
             <Title>{albumName}</Title>
             <Grid>
-                {photos.map((photo, index) => (
+                {loadedPhotos.map((photo, index) => ( // Changed to use loadedPhotos
                     <PhotoContainer key={photo.src} onClick={() => setActivePhotoIndex(index)}>
-                        <Image src={photo.src}
-                               alt={photo.alt}
-                               fill
-                               className="object-cover rounded-lg"
-                               placeholder="blur"
-                               blurDataURL={photo.blurDataURL}
+                        <Image
+                            src={photo.src}
+                            alt={photo.alt}
+                            fill
+                            className="object-cover rounded-lg"
+                            placeholder="blur"
+                            blurDataURL={photo.blurDataURL}
                         />
                     </PhotoContainer>
                 ))}
             </Grid>
+
+            {loadedPhotos.length < photos.length && ( // Added spinner for loading thumbnails
+                <Spinner />
+            )}
 
             {activePhotoIndex !== null && (
                 <Overlay onClick={closePhoto}>
                     <Button onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
                     <Button onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
 
-                    {/* Placeholder background */}
-                    {/*<PlaceholderImage*/}
-                    {/*    src={photos[activePhotoIndex].src}*/}
-                    {/*    alt="Blurred placeholder"*/}
-                    {/*    fill*/}
-                    {/*    placeholder="blur"*/}
-                    {/*    blurDataURL={photos[activePhotoIndex].blurDataURL}*/}
-                    {/*/>*/}
-
-                    {/* Spinner while loading */}
                     {isImageLoading && <Spinner />}
 
-                    {/* Full image */}
                     <FadeInImage
                         src={photos[activePhotoIndex].full}
                         alt={photos[activePhotoIndex].alt}

@@ -26,7 +26,7 @@ export default async function CategoryPage({ params }: PageProps) {
                     >
                         <Image
                             src={cover}
-                            alt={name}
+                            alt={displayName}
                             width={500}
                             height={300}
                             className="object-cover w-full rounded-md aspect-video"
