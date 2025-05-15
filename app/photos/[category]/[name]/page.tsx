@@ -27,26 +27,10 @@ async function generateBlurDataURL(imagePath: string): Promise<string> {
     return `data:image/webp;base64,${buffer.toString('base64')}`;
 }
 
-async function generateThumbnail(imagePath: string) {
-    const buffer = await sharp(imagePath)
-        .resize(500, 300)
-        .webp({ quality: 50 })
-        .toBuffer();
-
-    return `data:image/webp;base64,${buffer.toString('base64')}`;
-}
-
-async function generateFullImageOptimized(imagePath: string) {
-    const buffer = await sharp(imagePath)
-        .webp({ quality: 60 })
-        .toBuffer();
-
-    return `data:image/webp;base64,${buffer.toString('base64')}`;
-}
-
 async function getPhotos(category: string, name: string): Promise<Photo[]> {
     const albumDirectory = path.join(process.cwd(), 'public', 'photos', category, name);
     const thumbsPath = path.join(process.cwd(), 'public', 'thumbs', category, name);
+    const optimizedPath = path.join(process.cwd(), 'public', 'optimized', category, name);
 
     try {
         await fs.access(albumDirectory);
@@ -62,8 +46,8 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
         files.map(async (file) => {
             const fullPath = path.join(albumDirectory, file);
             const blurDataURL = await generateBlurDataURL(fullPath);
-            const thumbnail = await generateThumbnail(fullPath);
-            const fullImageOptimized = await generateFullImageOptimized(fullPath);
+            const thumbnail = thumbsPath;
+            const fullImageOptimized = optimizedPath;
 
             return {
                 src: thumbnail,
