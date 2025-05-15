@@ -1,6 +1,6 @@
 'use client'; //client component
 
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -8,6 +8,7 @@ interface Photo {
     src: string;
     alt: string;
     full: string;
+    blurDataURL: string;
 }
 
 const GalleryContainer = styled.div`
@@ -92,8 +93,17 @@ const FadeInImage = styled(Image)`
     }
 `;
 
+const LoadingText = styled.div`
+    position: absolute;
+    color: white;
+    font-size: 1.5rem;
+    z-index: 51;
+`;
+
 export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; albumName: string }) {
     const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
+    const [isImageLoading, setIsImageLoading] = useState(false);
+
 
     const showPrevPhoto = () => {
         if (activePhotoIndex === null) return;
@@ -113,13 +123,25 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
         if (e.key === 'ArrowRight') showNextPhoto();
     };
 
+    useEffect(() => {
+        if (activePhotoIndex !== null) {
+            setIsImageLoading(true);
+        }
+    }, [activePhotoIndex]);
+
     return (
         <GalleryContainer onKeyDown={handleKeyDown} tabIndex={0}>
             <Title>{albumName}</Title>
             <Grid>
                 {photos.map((photo, index) => (
                     <PhotoContainer key={photo.src} onClick={() => setActivePhotoIndex(index)}>
-                        <Image src={photo.src} alt={photo.alt} fill className="object-cover rounded-lg"/>
+                        <Image src={photo.src}
+                               alt={photo.alt}
+                               fill
+                               className="object-cover rounded-lg"
+                               placeholder="blur"
+                               blurDataURL={photo.blurDataURL}
+                        />
                     </PhotoContainer>
                 ))}
             </Grid>
@@ -128,7 +150,16 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
                 <Overlay onClick={closePhoto}>
                     <Button onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
                     <Button onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
-                    <FadeInImage src={photos[activePhotoIndex].full} alt={photos[activePhotoIndex].alt} fill />
+
+                    {isImageLoading && <LoadingText>Loading…</LoadingText>}
+
+                    <FadeInImage
+                        src={photos[activePhotoIndex].full}
+                        alt={photos[activePhotoIndex].alt}
+                        fill
+                        onLoad={() => setIsImageLoading(false)} //////////// ADD ////////////
+                        onLoadingComplete={() => setIsImageLoading(false)}
+                    />
                 </Overlay>
             )}
         </GalleryContainer>

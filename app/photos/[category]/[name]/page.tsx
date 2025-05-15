@@ -2,11 +2,13 @@ import fs from 'fs/promises';
 import path from 'path';
 import AlbumGallery from './AlbumGallery';
 import { notFound } from 'next/navigation';
+import sharp from "sharp";
 
 interface Photo {
     src: string;
     alt: string;
     full: string;
+    blurDataURL: string;
 }
 
 interface PageProps {
@@ -14,6 +16,15 @@ interface PageProps {
         category: string;
         name: string;
     };
+}
+
+async function generateBlurDataURL(imagePath: string): Promise<string> {
+    const buffer = await sharp(imagePath)
+        .resize(10) // Very low-res for placeholder
+        .webp({ quality: 50 })
+        .toBuffer();
+
+    return `data:image/webp;base64,${buffer.toString('base64')}`;
 }
 
 async function getPhotos(category: string, name: string): Promise<Photo[]> {
@@ -30,11 +41,19 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
     const files = (await fs.readdir(thumbsPath))
         .filter((file) => /\.(jpe?g|png|gif|webp)$/i.test(file));
 
-    const photos: Photo[] = files.map((file) => ({
-        src: `/thumbs/${category}/${name}/${file}`,
-        alt: file,
-        full: `/photos/${category}/${name}/${file}`
-    }));
+    const photos: Photo[] = await Promise.all(
+        files.map(async (file) => {
+            const fullPath = path.join(albumDirectory, file);
+            const blurDataURL = await generateBlurDataURL(fullPath);
+
+            return {
+                src: `/thumbs/${category}/${name}/${file}`,
+                alt: file,
+                full: `/photos/${category}/${name}/${file}`,
+                blurDataURL,
+            };
+        })
+    );
 
     return photos;
 }
