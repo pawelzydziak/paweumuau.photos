@@ -61,14 +61,14 @@ const Spinner = styled.div`
     }
 `;
 
-const PlaceholderImage = styled(Image)`
-    position: absolute;
-    inset: 0;
-    object-fit: contain;
-    z-index: 1;
-    filter: blur(20px);
-    transform: scale(1.05);
-`;
+// const PlaceholderImage = styled(Image)`
+//     position: absolute;
+//     inset: 0;
+//     object-fit: contain;
+//     z-index: 1;
+//     filter: blur(20px);
+//     transform: scale(1.05);
+// `;
 
 const PhotoContainer = styled.div`
     position: relative;
@@ -178,13 +178,13 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
                     <Button onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
 
                     {/* Placeholder background */}
-                    <PlaceholderImage
-                        src={photos[activePhotoIndex].src}
-                        alt="Blurred placeholder"
-                        fill
-                        placeholder="blur"
-                        blurDataURL={photos[activePhotoIndex].blurDataURL}
-                    />
+                    {/*<PlaceholderImage*/}
+                    {/*    src={photos[activePhotoIndex].src}*/}
+                    {/*    alt="Blurred placeholder"*/}
+                    {/*    fill*/}
+                    {/*    placeholder="blur"*/}
+                    {/*    blurDataURL={photos[activePhotoIndex].blurDataURL}*/}
+                    {/*/>*/}
 
                     {/* Spinner while loading */}
                     {isImageLoading && <Spinner />}
