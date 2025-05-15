@@ -28,12 +28,10 @@ async function generateBlurDataURL(imagePath: string): Promise<string> {
 }
 
 async function getPhotos(category: string, name: string): Promise<Photo[]> {
-    const albumDirectory = path.join(process.cwd(), 'public', 'photos', category, name);
     const thumbsPath = path.join(process.cwd(), 'public', 'thumbs', category, name);
     const optimizedPath = path.join(process.cwd(), 'public', 'optimized', category, name);
 
     try {
-        await fs.access(albumDirectory);
         await fs.access(thumbsPath);
         await fs.access(optimizedPath);
     } catch{
@@ -45,15 +43,13 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
 
     const photos: Photo[] = await Promise.all(
         files.map(async (file) => {
-            const fullPath = path.join(albumDirectory, file);
-            const blurDataURL = await generateBlurDataURL(fullPath);
-            const thumbnail = path.join(thumbsPath, file);
-            const fullImageOptimized =  path.join(optimizedPath, file);
+            const optimizedImagePath = path.join(optimizedPath, file);
+            const blurDataURL = await generateBlurDataURL(optimizedImagePath);
 
             return {
-                src: thumbnail,
+                src: `/thumbs/${category}/${name}/${file}`,
+                full: `/optimized/${category}/${name}/${file}`,
                 alt: file,
-                full: fullImageOptimized,
                 blurDataURL,
             };
         })
