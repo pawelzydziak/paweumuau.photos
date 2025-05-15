@@ -5,7 +5,7 @@ export default function Music() {
         <div className="flex flex-col md:flex-row h-screen">
             <div className="w-full md:w-1/2 max-h-screen">
                 <Image
-                    src="/photos/meta/muzyka-cover.webp"
+                    src="/optimized/meta/muzyka-cover.webp"
                     alt="cover"
                     className="object-cover w-full h-full"
                     width={500}

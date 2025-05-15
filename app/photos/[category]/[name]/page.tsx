@@ -46,8 +46,8 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
         files.map(async (file) => {
             const fullPath = path.join(albumDirectory, file);
             const blurDataURL = await generateBlurDataURL(fullPath);
-            const thumbnail = thumbsPath;
-            const fullImageOptimized = optimizedPath;
+            const thumbnail = `${thumbsPath}/${file}`;
+            const fullImageOptimized = `${optimizedPath}/${file}`;
 
             return {
                 src: thumbnail,

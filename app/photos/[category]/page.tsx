@@ -21,7 +21,7 @@ export default async function CategoryPage({ params }: PageProps) {
                 {albums.map(({ name, displayName, cover }) => (
                     <Link
                         key={displayName}
-                        href={`/photos/${category}/${name}`}
+                        href={`/optimized/${category}/${name}`}
                         className="group relative block"
                     >
                         <Image
