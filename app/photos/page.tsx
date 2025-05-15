@@ -31,7 +31,7 @@ export default function PhotosPage() {
                     {categories.map((category) => (
                         <Link
                             key={category.name}
-                            href={`/optimized/${category.name}`}
+                            href={`/photos/${category.name}`}
                             className="bg-stone-50 py-3 px-10 rounded-3xl shadow-md font-semibold text-center"
                         >
                             {category.label}
