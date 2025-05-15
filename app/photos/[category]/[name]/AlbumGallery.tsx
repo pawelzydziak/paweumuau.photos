@@ -119,12 +119,12 @@ const FadeInImage = styled(Image)`
     }
 `;
 
-const LoadingText = styled.div`
-    position: absolute;
-    color: white;
-    font-size: 1.5rem;
-    z-index: 51;
-`;
+// const LoadingText = styled.div`
+//     position: absolute;
+//     color: white;
+//     font-size: 1.5rem;
+//     z-index: 51;
+// `;
 
 export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; albumName: string }) {
     const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
