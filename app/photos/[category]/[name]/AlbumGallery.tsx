@@ -44,6 +44,32 @@ const Grid = styled.div`
     }
 `;
 
+const Spinner = styled.div`
+    border: 6px solid rgba(255, 255, 255, 0.2);
+    border-top: 6px solid white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    z-index: 52;
+
+    @keyframes spin {
+        to {
+            transform: rotate(360deg);
+        }
+    }
+`;
+
+const PlaceholderImage = styled(Image)`
+    position: absolute;
+    inset: 0;
+    object-fit: contain;
+    z-index: 1;
+    filter: blur(20px);
+    transform: scale(1.05);
+`;
+
 const PhotoContainer = styled.div`
     position: relative;
     aspect-ratio: 1;
@@ -151,14 +177,26 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
                     <Button onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
                     <Button onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
 
-                    {isImageLoading && <LoadingText>Loading…</LoadingText>}
+                    {/* Placeholder background */}
+                    <PlaceholderImage
+                        src={photos[activePhotoIndex].src}
+                        alt="Blurred placeholder"
+                        fill
+                        placeholder="blur"
+                        blurDataURL={photos[activePhotoIndex].blurDataURL}
+                    />
 
+                    {/* Spinner while loading */}
+                    {isImageLoading && <Spinner />}
+
+                    {/* Full image */}
                     <FadeInImage
                         src={photos[activePhotoIndex].full}
                         alt={photos[activePhotoIndex].alt}
                         fill
-                        onLoad={() => setIsImageLoading(false)} //////////// ADD ////////////
+                        onLoad={() => setIsImageLoading(false)}
                         onLoadingComplete={() => setIsImageLoading(false)}
+                        style={{ zIndex: isImageLoading ? 2 : 3 }}
                     />
                 </Overlay>
             )}
