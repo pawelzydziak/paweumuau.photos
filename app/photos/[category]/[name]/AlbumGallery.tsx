@@ -175,15 +175,29 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
             <Title>{albumName}</Title>
             <Grid>
                 {loadedPhotos.map((photo, index) => ( // Changed to use loadedPhotos
-                    <PhotoContainer key={photo.src} onClick={() => setActivePhotoIndex(index)}>
+                    <PhotoContainer key={photo.src} onClick={() => setActivePhotoIndex(index)} className="relative aspect-video overflow-hidden rounded-lg">
+                        {/* Blurred background */}
                         <Image
                             src={photo.src}
-                            alt={photo.alt}
+                            alt=""
                             fill
-                            className="object-cover rounded-lg"
-                            placeholder="blur"
-                            blurDataURL={photo.blurDataURL}
+                            className="object-cover blur-xl scale-110 brightness-75"
+                            aria-hidden="true"
                         />
+
+                        {/* Actual photo */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+
+                                <Image
+                                    src={photo.src}
+                                    alt={photo.alt}
+                                    fill
+                                    className="object-contain"
+                                    placeholder="blur"
+                                    blurDataURL={photo.blurDataURL}
+                                />
+
+                        </div>
                     </PhotoContainer>
                 ))}
             </Grid>
