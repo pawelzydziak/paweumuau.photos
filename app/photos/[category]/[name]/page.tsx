@@ -35,6 +35,7 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
     try {
         await fs.access(albumDirectory);
         await fs.access(thumbsPath);
+        await fs.access(optimizedPath);
     } catch{
         notFound();
     }
@@ -46,8 +47,8 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
         files.map(async (file) => {
             const fullPath = path.join(albumDirectory, file);
             const blurDataURL = await generateBlurDataURL(fullPath);
-            const thumbnail = `${thumbsPath}/${file}`;
-            const fullImageOptimized = `${optimizedPath}/${file}`;
+            const thumbnail = path.join(thumbsPath, file);
+            const fullImageOptimized =  path.join(optimizedPath, file);
 
             return {
                 src: thumbnail,
