@@ -20,7 +20,7 @@ interface PageProps {
 
 async function generateBlurDataURL(imagePath: string): Promise<string> {
     const buffer = await sharp(imagePath)
-        .resize(10) // Very low-res for placeholder
+        .resize(20) // Very low-res for placeholder
         .webp({ quality: 50 })
         .toBuffer();
 

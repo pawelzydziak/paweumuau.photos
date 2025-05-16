@@ -129,7 +129,12 @@ const FadeInImage = styled(Image)`
 export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; albumName: string }) {
     const [activePhotoIndex, setActivePhotoIndex] = useState<number | null>(null);
     const [isImageLoading, setIsImageLoading] = useState(false);
-    const [loadedPhotos, setLoadedPhotos] = useState<Photo[]>([]); // Added state to manage loaded photos
+    const [loadedPhotos, setLoadedPhotos] = useState<Photo[]>([]);
+
+    const openPhoto = (index: number) => {
+        setActivePhotoIndex(index);
+        window.history.pushState({ photoOpen: true }, '');
+    };
 
     const showPrevPhoto = () => {
         if (activePhotoIndex === null) return;
@@ -141,7 +146,12 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
         setActivePhotoIndex((activePhotoIndex + 1) % photos.length);
     };
 
-    const closePhoto = () => setActivePhotoIndex(null);
+    const closePhoto = () => {
+        setActivePhotoIndex(null);
+        if (window.history.state?.photoOpen) {
+            window.history.back();
+        }
+    };
 
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Escape') closePhoto();
@@ -150,9 +160,16 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
     };
 
     useEffect(() => {
-        if (activePhotoIndex !== null) {
-            setIsImageLoading(true);
-        }
+        const handlePopState = () => {
+            if (activePhotoIndex !== null) {
+                closePhoto();
+            }
+        };
+
+        window.addEventListener('popstate', handlePopState);
+        return () => {
+            window.removeEventListener('popstate', handlePopState);
+        };
     }, [activePhotoIndex]);
 
     useEffect(() => {
@@ -175,7 +192,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
             <Title>{albumName}</Title>
             <Grid>
                 {loadedPhotos.map((photo, index) => ( // Changed to use loadedPhotos
-                    <PhotoContainer key={photo.src} onClick={() => setActivePhotoIndex(index)} className="relative aspect-video overflow-hidden rounded-lg">
+                    <PhotoContainer key={photo.src} onClick={() => openPhoto(index)} className="relative aspect-video overflow-hidden rounded-lg">
                         {/* Blurred background */}
                         <Image
                             src={photo.src}
