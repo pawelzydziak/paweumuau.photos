@@ -152,6 +152,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
 
     const openPhoto = (index: number) => {
         setActivePhotoIndex(index);
+        blockScroll();
         window.history.pushState({ photoOpen: true }, '');
     };
 
@@ -167,6 +168,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
 
     const closePhoto = () => {
         setActivePhotoIndex(null);
+        unblockScroll();
         if (window.history.state?.photoOpen) {
             window.history.back();
         }
@@ -182,7 +184,13 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
             showNextPhoto(); // Right half
         }
     };
+    function blockScroll() {
+        document.body.style.overflow = 'hidden';
+    }
 
+    function unblockScroll() {
+        document.body.style.overflow = '';
+    }
     const handleKeyDown = (e: React.KeyboardEvent) => {
         if (e.key === 'Escape') closePhoto();
         if (e.key === 'ArrowLeft') showPrevPhoto();
