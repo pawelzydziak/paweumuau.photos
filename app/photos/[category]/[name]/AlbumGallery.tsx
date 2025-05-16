@@ -62,6 +62,29 @@ const Spinner = styled.div`
     }
 `;
 
+const CloseButton = styled.button`
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 51;
+
+    &:hover {
+        background: rgba(255, 255, 255, 0.8);
+        color: black;
+    }
+`;
+
 // const PlaceholderImage = styled(Image)`
 //     position: absolute;
 //     inset: 0;
@@ -87,7 +110,7 @@ const Overlay = styled.div`
     z-index: 50;
 `;
 
-const Button = styled.button`
+const Button = styled.button<{ position: 'left' | 'right' }>`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
@@ -95,13 +118,8 @@ const Button = styled.button`
     font-size: 2rem;
     z-index: 50;
 
-    &:first-of-type {
-        left: 1rem;
-    }
-
-    &:last-of-type {
-        right: 1rem;
-    }
+    ${({ position }) =>
+            position === 'left' ? 'left: 1rem;' : 'right: 1rem;'}
 `;
 
 const FadeInImage = styled(Image)`
@@ -151,6 +169,17 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
         setActivePhotoIndex(null);
         if (window.history.state?.photoOpen) {
             window.history.back();
+        }
+    };
+
+    const handleOverlayClick = (e: React.MouseEvent) => {
+        const overlayWidth = e.currentTarget.clientWidth;
+        const clickX = e.clientX;
+
+        if (clickX < overlayWidth / 2) {
+            showPrevPhoto(); // Left half
+        } else if (clickX > overlayWidth / 2) {
+            showNextPhoto(); // Right half
         }
     };
 
@@ -232,9 +261,21 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
             )}
 
             {activePhotoIndex !== null && (
-                <Overlay {...swipeHandlers} onClick={closePhoto}>
-                    <Button onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
-                    <Button onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
+                <Overlay {...swipeHandlers} onClick={
+                    (e) => {
+                        e.stopPropagation();
+                        handleOverlayClick(e);
+                    }
+                }>
+                    <CloseButton onClick={(e) => {
+                        e.stopPropagation();
+                        closePhoto();
+                    }}>
+                        ×
+                    </CloseButton>
+
+                    <Button position="left" onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
+                    <Button position="right" onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
 
                     {isImageLoading && <Spinner />}
 
