@@ -59,7 +59,7 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
 }
 
 export default async function Album({ params }: PageProps) {
-    const { category, name } = params;
+    const { category, name } = await params;
     const photos = await getPhotos(category, name);
 
     return <AlbumGallery photos={photos} albumName={name} />;
