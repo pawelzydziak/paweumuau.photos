@@ -152,6 +152,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
 
     const openPhoto = (index: number) => {
         setActivePhotoIndex(index);
+        setIsImageLoading(true)
         blockScroll();
         window.history.pushState({ photoOpen: true }, '');
     };
