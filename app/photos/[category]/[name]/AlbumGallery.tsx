@@ -1,6 +1,7 @@
 'use client'; //client component
 
 import {useEffect, useState} from 'react';
+import { useSwipeable } from 'react-swipeable';
 import Image from 'next/image';
 import styled from 'styled-components';
 
@@ -159,6 +160,13 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
         if (e.key === 'ArrowRight') showNextPhoto();
     };
 
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: showNextPhoto,
+        onSwipedRight: showPrevPhoto,
+        trackTouch: true,
+        trackMouse: false,
+    });
+
     useEffect(() => {
         const handlePopState = () => {
             if (activePhotoIndex !== null) {
@@ -224,7 +232,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
             )}
 
             {activePhotoIndex !== null && (
-                <Overlay onClick={closePhoto}>
+                <Overlay {...swipeHandlers} onClick={closePhoto}>
                     <Button onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
                     <Button onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
 
