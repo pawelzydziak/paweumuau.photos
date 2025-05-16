@@ -216,7 +216,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
         return () => {
             window.removeEventListener('popstate', handlePopState);
         };
-    }, [activePhotoIndex]);
+    }, [activePhotoIndex, closePhoto]);
 
     useEffect(() => {
         const loadPhotos = async () => {
