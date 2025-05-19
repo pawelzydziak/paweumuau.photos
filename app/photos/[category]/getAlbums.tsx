@@ -64,6 +64,7 @@ const albumNameMap: { [key: string]: string } = {
     Rosliny: 'Rośliny',
     taes: 'TAES',
     Zwierzeta: 'Zwierzęta',
+    Papugi: 'Papugi'
 };
 
 function formatAlbumName(name: string): string {
