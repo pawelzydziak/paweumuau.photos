@@ -159,12 +159,20 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
 
     const showPrevPhoto = () => {
         if (activePhotoIndex === null) return;
-        setActivePhotoIndex((activePhotoIndex - 1 + photos.length) % photos.length);
+        setActivePhotoIndex((prev) => {
+            const newIndex = (prev! - 1 + photos.length) % photos.length;
+            setIsImageLoading(true);
+            return newIndex;
+        });
     };
 
     const showNextPhoto = () => {
         if (activePhotoIndex === null) return;
-        setActivePhotoIndex((activePhotoIndex + 1) % photos.length);
+        setActivePhotoIndex((prev) => {
+            const newIndex = (prev! + 1) % photos.length;
+            setIsImageLoading(true);
+            return newIndex;
+        });
     };
 
     const closePhoto = () => {
@@ -227,7 +235,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
                     }
                     return prev;
                 });
-                await new Promise((resolve) => setTimeout(resolve, 50)); // Simulate delay for loading
+                await new Promise((resolve) => setTimeout(resolve, 50));
             }
         };
         loadPhotos();
