@@ -8,7 +8,7 @@ interface PageProps {
 }
 
 export default async function CategoryPage({ params }: PageProps) {
-    const { category } = params;
+    const { category } = await params;
     const albums = await getAlbums(category);
 
     return <CategoryGrid albums={albums} category={category} />;

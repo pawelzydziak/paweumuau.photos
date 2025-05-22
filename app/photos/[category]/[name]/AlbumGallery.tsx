@@ -1,6 +1,6 @@
 'use client'; //client component
 
-import {useEffect, useState} from 'react';
+import {useEffect, useState, useCallback} from 'react';
 import { useSwipeable } from 'react-swipeable';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -150,49 +150,50 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
     const [isImageLoading, setIsImageLoading] = useState(false);
     const [loadedPhotos, setLoadedPhotos] = useState<Photo[]>([]);
 
-    const openPhoto = (index: number) => {
+    const openPhoto = useCallback((index: number) => {
         setActivePhotoIndex(index);
-        setIsImageLoading(true)
+        setIsImageLoading(true);
         blockScroll();
         window.history.pushState({ photoOpen: true }, '');
-    };
+    }, []);
 
-    const showPrevPhoto = () => {
+    const showPrevPhoto = useCallback(() => {
         if (activePhotoIndex === null) return;
         setActivePhotoIndex((prev) => {
             const newIndex = (prev! - 1 + photos.length) % photos.length;
             setIsImageLoading(true);
             return newIndex;
         });
-    };
+    }, [activePhotoIndex, photos.length]);
 
-    const showNextPhoto = () => {
+    const showNextPhoto = useCallback(() => {
         if (activePhotoIndex === null) return;
         setActivePhotoIndex((prev) => {
             const newIndex = (prev! + 1) % photos.length;
             setIsImageLoading(true);
             return newIndex;
         });
-    };
+    }, [activePhotoIndex, photos.length]);
 
-    const closePhoto = () => {
+    const closePhoto = useCallback(() => {
         setActivePhotoIndex(null);
         unblockScroll();
         if (window.history.state?.photoOpen) {
             window.history.back();
         }
-    };
+    }, []);
 
-    const handleOverlayClick = (e: React.MouseEvent) => {
+    const handleOverlayClick = useCallback((e: React.MouseEvent) => {
         const overlayWidth = e.currentTarget.clientWidth;
         const clickX = e.clientX;
 
         if (clickX < overlayWidth / 2) {
-            showPrevPhoto(); // Left half
-        } else if (clickX > overlayWidth / 2) {
-            showNextPhoto(); // Right half
+            showPrevPhoto();
+        } else {
+            showNextPhoto();
         }
-    };
+    }, [showPrevPhoto, showNextPhoto]);
+
     function blockScroll() {
         document.body.style.overflow = 'hidden';
     }
@@ -200,11 +201,12 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
     function unblockScroll() {
         document.body.style.overflow = '';
     }
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+
+    const handleKeyDown = useCallback((e: React.KeyboardEvent) => {
         if (e.key === 'Escape') closePhoto();
         if (e.key === 'ArrowLeft') showPrevPhoto();
         if (e.key === 'ArrowRight') showNextPhoto();
-    };
+    }, [closePhoto, showPrevPhoto, showNextPhoto]);
 
     const swipeHandlers = useSwipeable({
         onSwipedLeft: showNextPhoto,
@@ -245,7 +247,7 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
         <GalleryContainer onKeyDown={handleKeyDown} tabIndex={0}>
             <Title>{albumName}</Title>
             <Grid>
-                {loadedPhotos.map((photo, index) => ( // Changed to use loadedPhotos
+                {loadedPhotos.map((photo, index) => (
                     <PhotoContainer key={photo.src} onClick={() => openPhoto(index)} className="relative aspect-video overflow-hidden rounded-lg">
                         {/* Blurred background */}
                         <Image
@@ -258,32 +260,24 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
 
                         {/* Actual photo */}
                         <div className="absolute inset-0 flex items-center justify-center">
-
-                                <Image
-                                    src={photo.src}
-                                    alt={photo.alt}
-                                    fill
-                                    className="object-contain"
-                                    placeholder="blur"
-                                    blurDataURL={photo.blurDataURL}
-                                />
-
+                            <Image
+                                src={photo.src}
+                                alt={photo.alt}
+                                fill
+                                className="object-contain"
+                                placeholder="blur"
+                                blurDataURL={photo.blurDataURL}
+                            />
                         </div>
                     </PhotoContainer>
                 ))}
             </Grid>
 
-            {loadedPhotos.length < photos.length && ( // Added spinner for loading thumbnails
-                <Spinner />
-            )}
-
             {activePhotoIndex !== null && (
-                <Overlay {...swipeHandlers} onClick={
-                    (e) => {
-                        e.stopPropagation();
-                        handleOverlayClick(e);
-                    }
-                }>
+                <Overlay {...swipeHandlers} onClick={(e) => {
+                    e.stopPropagation();
+                    handleOverlayClick(e);
+                }}>
                     <CloseButton onClick={(e) => {
                         e.stopPropagation();
                         closePhoto();
@@ -294,16 +288,16 @@ export default function AlbumGallery({ photos, albumName }: { photos: Photo[]; a
                     <Button position="left" onClick={(e) => { e.stopPropagation(); showPrevPhoto(); }}>←</Button>
                     <Button position="right" onClick={(e) => { e.stopPropagation(); showNextPhoto(); }}>→</Button>
 
-                    {isImageLoading && <Spinner />}
-
                     <FadeInImage
                         src={photos[activePhotoIndex].full}
                         alt={photos[activePhotoIndex].alt}
                         fill
                         onLoad={() => setIsImageLoading(false)}
                         onLoadingComplete={() => setIsImageLoading(false)}
-                        style={{ zIndex: isImageLoading ? 2 : 3 }}
+                        style={{ zIndex: 3 }}
                     />
+
+                    {isImageLoading && <Spinner />}
                 </Overlay>
             )}
         </GalleryContainer>

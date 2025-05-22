@@ -22,13 +22,13 @@ const albumNameMap: { [key: string]: string } = {
     norwegia: 'Norwegia',
     ostrawa: 'Ostrawa',
     phapos: 'Cypr',
-    'praga-fonem': 'Praga',
+    'praga-fonem': 'Praga Stare',
     praha: 'Praga',
     ryga: 'Ryga',
     serbia: 'Serbia',
     'skalne-miasto': 'Skalne Miasto',
     slowenia: 'Słowenia',
-    talinn: 'Tallin',
+    talinn: 'Tallinn',
     triest: 'Triest',
     wenecja: 'Wenecja',
     wilno: 'Wilno',
@@ -46,10 +46,10 @@ const albumNameMap: { [key: string]: string } = {
     mikolow: 'Mikołów',
     nikiszowiec: 'Nikiszowiec',
     olsztyn: 'Olsztyn',
-    'pustynia-na-zabich': 'Pustynia na Zabich',
+    'pustynia-na-zabich': 'Pustynia na Żabich',
     swierklaniec: 'Świerklaniec',
     warszawa: 'Warszawa',
-    zoo: 'Zoo',
+    zoo: 'ZOO',
     autoportret: 'Autoportret',
     autoprezent: 'Autoprezent',
     forza: 'Forza',
@@ -67,7 +67,7 @@ const albumNameMap: { [key: string]: string } = {
     papugi: 'Papugi'
 };
 
-function formatAlbumName(name: string): string {
+export function formatAlbumName(name: string): string {
     return albumNameMap[name] || name;
 }
 

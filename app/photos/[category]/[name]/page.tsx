@@ -3,6 +3,7 @@ import path from 'path';
 import AlbumGallery from './AlbumGallery';
 import { notFound } from 'next/navigation';
 import sharp from "sharp";
+import { formatAlbumName } from '../getAlbums';
 
 interface Photo {
     src: string;
@@ -61,6 +62,7 @@ async function getPhotos(category: string, name: string): Promise<Photo[]> {
 export default async function Album({ params }: PageProps) {
     const { category, name } = await params;
     const photos = await getPhotos(category, name);
+    const displayName = formatAlbumName(name);
 
-    return <AlbumGallery photos={photos} albumName={name} />;
+    return <AlbumGallery photos={photos} albumName={displayName} />;
 }
