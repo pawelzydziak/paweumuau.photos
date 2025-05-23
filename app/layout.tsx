@@ -1,8 +1,8 @@
 import "./globals.css";
 
 export const metadata = {
-    title: "Portfolio",
-    description: "Photo portfolio of your albums",
+    title: "Paweumuau.photos - Portfolio",
+    description: "Bardzo ładnie dziś wyglądasz. Pij proszę wodę.",
 };
 
 export default function RootLayout({
